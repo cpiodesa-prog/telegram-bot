@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Щоденний оркестратор: перевіряє нові скликання сесій, оголошення виконкому
-та засідання комісій Одеської міськради, і шле нові у Telegram.
+"""Щоденний оркестратор: перевіряє нові скликання сесій, кадрові розпорядження
+(призначення/звільнення), оголошення виконкому та засідання комісій Одеської
+міськради, і шле нові у Telegram.
 
 Запуск:
   python run_daily.py            # реальна відправка (потрібні TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID)
@@ -8,11 +9,12 @@
 
 Використовується в .github/workflows/daily-notify.yml раз на день.
 """
-import sys, os, argparse, html, traceback
+import sys, os, re, argparse, html, traceback
 sys.stdout.reconfigure(encoding="utf-8")
 
 import state
 import sessions
+import personnel
 import vykonkom_announce
 import commissions
 import telegram_notify
@@ -25,6 +27,17 @@ def esc(s):
 def fmt_session(e):
     return (
         f"🗓 <b>Скликання сесії Одеської міськради</b>\n"
+        f"№{esc(e['number'])} від {esc(e['date'])}\n"
+        f"{esc(e['description'])}\n"
+        f"{e['url']}"
+    )
+
+
+def fmt_personnel(e):
+    action = "Призначення" if re.search(r"призначенн", e["description"], re.I) else "Звільнення"
+    icon = "🆕" if action == "Призначення" else "🔚"
+    return (
+        f"{icon} <b>Кадрове розпорядження: {action.lower()}</b>\n"
         f"№{esc(e['number'])} від {esc(e['date'])}\n"
         f"{esc(e['description'])}\n"
         f"{e['url']}"
@@ -69,6 +82,14 @@ def run(dry_run=False):
         print(f"[sessions] нових: {len(new_sessions)}")
     except Exception:
         print("[sessions] ПОМИЛКА:", file=sys.stderr)
+        traceback.print_exc()
+
+    try:
+        new_pers = state.filter_new(st, "personnel", personnel.latest_personnel_changes(), lambda e: e["url"])
+        messages += [fmt_personnel(e) for e in new_pers]
+        print(f"[personnel] нових: {len(new_pers)}")
+    except Exception:
+        print("[personnel] ПОМИЛКА:", file=sys.stderr)
         traceback.print_exc()
 
     try:
