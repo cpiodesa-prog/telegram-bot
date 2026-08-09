@@ -39,4 +39,10 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add state/seen.json
           git diff --cached --quiet || git commit -m "state: оновлено список надісланих подій"
-          git push
+          # якщо хтось запушив у main, поки цей job працював — підтягнути й спробувати ще раз,
+          # щоб не падати з "rejected" і не втрачати щойно надісланий стан
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            echo "push не вдався, спроба $i, повторюю..."
+            sleep 5
+          done
