@@ -1,0 +1,42 @@
+name: Щоденне сповіщення про сесії/виконком/комісії ОМР
+
+on:
+  schedule:
+    # 10:00 та 16:30 за Києвом. Cron працює в UTC і НЕ підлаштовується під
+    # перехід на літній/зимовий час — тут вказано час для літнього (UTC+3,
+    # діє зараз, з березня по жовтень). На зимовий час (UTC+2, з кінця
+    # жовтня) ці ж рядки відповідатимуть 11:00 і 17:30 за Києвом — якщо
+    # важлива точність, зсунути на годину назад (07:00 -> "0 7 * * *" тощо).
+    - cron: "0 7 * * *"    # ~10:00 Київ (літній час)
+    - cron: "30 13 * * *"  # ~16:30 Київ (літній час)
+  workflow_dispatch: {}   # можливість запустити вручну з вкладки Actions
+
+permissions:
+  contents: write   # потрібно, щоб закомітити оновлений state/seen.json
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily check
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python run_daily.py
+
+      - name: Commit updated state
+        run: |
+          git config user.name "oms-notifier-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/seen.json
+          git diff --cached --quiet || git commit -m "state: оновлено список надісланих подій"
+          git push
