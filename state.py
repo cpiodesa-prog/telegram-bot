@@ -29,11 +29,15 @@ def save(state):
     json.dump(trimmed, open(STATE_FILE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
-def filter_new(state, category, events, key_fn):
-    """Повертає лише ті events, чийого ключа ще нема у state[category],
-    і одразу дописує нові ключі у state (in-place)."""
+def get_new(state, category, events, key_fn):
+    """Повертає лише ті events, чийого ключа ще нема у state[category].
+    Без побічних ефектів — нічого не позначає "баченим". Позначати треба
+    через mark_seen() ПІСЛЯ того, як подія реально успішно надіслана,
+    інакше при збої відправки частина подій тихо загубиться назавжди."""
     seen = set(state.get(category, []))
-    fresh = [e for e in events if key_fn(e) not in seen]
-    for e in fresh:
-        state.setdefault(category, []).append(key_fn(e))
-    return fresh
+    return [e for e in events if key_fn(e) not in seen]
+
+
+def mark_seen(state, category, key):
+    """Позначає одну подію як надіслану (in-place)."""
+    state.setdefault(category, []).append(key)

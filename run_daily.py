@@ -9,7 +9,7 @@
 
 Використовується в .github/workflows/daily-notify.yml раз на день.
 """
-import sys, os, re, argparse, html, traceback
+import sys, os, re, time, argparse, html, traceback
 sys.stdout.reconfigure(encoding="utf-8")
 
 import state
@@ -72,56 +72,69 @@ def commission_key(e):
     return f"{e.get('commission_url')}|{e['date']}|{e['time']}"
 
 
-def run(dry_run=False):
-    st = state.load()
-    messages = []
+CATEGORY_SOURCES = [
+    ("sessions", sessions.latest_sessions, lambda e: e["url"], fmt_session),
+    ("personnel", personnel.latest_personnel_changes, lambda e: e["url"], fmt_personnel),
+    ("vykonkom", vykonkom_announce.latest_vykonkom_announcements, lambda e: e["url"], fmt_vykonkom),
+    ("commissions", commissions.latest_commission_meetings, commission_key, fmt_commission),
+]
 
+
+def process_category(st, name, fetch_fn, key_fn, fmt_fn, dry_run):
+    """Фетчить категорію, шле нові повідомлення і одразу зберігає state —
+    незалежно від категорії, збій в одній не чіпає прогрес інших."""
     try:
-        new_sessions = state.filter_new(st, "sessions", sessions.latest_sessions(), lambda e: e["url"])
-        messages += [fmt_session(e) for e in new_sessions]
-        print(f"[sessions] нових: {len(new_sessions)}")
+        events = fetch_fn()
     except Exception:
-        print("[sessions] ПОМИЛКА:", file=sys.stderr)
+        print(f"[{name}] ПОМИЛКА фетчу:", file=sys.stderr)
         traceback.print_exc()
+        return 0, 0
 
-    try:
-        new_pers = state.filter_new(st, "personnel", personnel.latest_personnel_changes(), lambda e: e["url"])
-        messages += [fmt_personnel(e) for e in new_pers]
-        print(f"[personnel] нових: {len(new_pers)}")
-    except Exception:
-        print("[personnel] ПОМИЛКА:", file=sys.stderr)
-        traceback.print_exc()
-
-    try:
-        new_vk = state.filter_new(st, "vykonkom", vykonkom_announce.latest_vykonkom_announcements(), lambda e: e["url"])
-        messages += [fmt_vykonkom(e) for e in new_vk]
-        print(f"[vykonkom] нових: {len(new_vk)}")
-    except Exception:
-        print("[vykonkom] ПОМИЛКА:", file=sys.stderr)
-        traceback.print_exc()
-
-    try:
-        new_comm = state.filter_new(st, "commissions", commissions.latest_commission_meetings(), commission_key)
-        messages += [fmt_commission(e) for e in new_comm]
-        print(f"[commissions] нових: {len(new_comm)}")
-    except Exception:
-        print("[commissions] ПОМИЛКА:", file=sys.stderr)
-        traceback.print_exc()
-
-    if not messages:
-        print("Нових подій немає.")
-        return
+    new = state.get_new(st, name, events, key_fn)
+    print(f"[{name}] нових: {len(new)}")
+    if not new:
+        return 0, 0
 
     if dry_run:
-        print(f"\n[--dry-run] {len(messages)} повідомлень НЕ надіслано, state НЕ збережено:\n")
-        for m in messages:
+        for e in new:
             print("----")
-            print(m)
-        return
+            print(fmt_fn(e))
+        return len(new), 0
 
-    telegram_notify.send_many(messages)
-    state.save(st)
-    print(f"Надіслано {len(messages)} повідомлень, state оновлено.")
+    sent = 0
+    try:
+        for i, e in enumerate(new):
+            telegram_notify.send(fmt_fn(e))
+            state.mark_seen(st, name, key_fn(e))  # тільки ПІСЛЯ успішної відправки саме цієї події
+            sent += 1
+            if i < len(new) - 1:
+                time.sleep(1.5)
+    except Exception:
+        print(f"[{name}] ПОМИЛКА відправки в Telegram (надіслано {sent}/{len(new)}):", file=sys.stderr)
+        traceback.print_exc()
+    finally:
+        # зберігаємо стан навіть при частковому/невдалому надсиланні: те, що реально
+        # пішло — зафіксовано, те, що ні — лишається "новим" і повториться наступного разу
+        state.save(st)
+
+    return len(new), sent
+
+
+def run(dry_run=False):
+    st = state.load()
+    total_new = total_sent = 0
+
+    for name, fetch_fn, key_fn, fmt_fn in CATEGORY_SOURCES:
+        n, s = process_category(st, name, fetch_fn, key_fn, fmt_fn, dry_run)
+        total_new += n
+        total_sent += s
+
+    if total_new == 0:
+        print("Нових подій немає.")
+    elif dry_run:
+        print(f"\n[--dry-run] {total_new} нових подій, нічого не надіслано і не збережено.")
+    else:
+        print(f"Надіслано {total_sent}/{total_new} нових подій, state оновлено після кожної категорії.")
 
 
 if __name__ == "__main__":
