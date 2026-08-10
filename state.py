@@ -10,7 +10,7 @@ import os, json
 STATE_DIR = "state"
 STATE_FILE = os.path.join(STATE_DIR, "seen.json")
 
-CATEGORIES = ["sessions", "vykonkom", "commissions", "personnel"]
+CATEGORIES = ["sessions", "vykonkom", "commissions", "personnel", "trips"]
 
 
 def load():

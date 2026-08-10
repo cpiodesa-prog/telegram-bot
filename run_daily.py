@@ -15,6 +15,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 import state
 import sessions
 import personnel
+import trips
 import vykonkom_announce
 import commissions
 import telegram_notify
@@ -53,6 +54,15 @@ def fmt_personnel(e):
     )
 
 
+def fmt_trip(e):
+    return (
+        f"✈️ <b>Службове відрядження мера</b>\n"
+        f"№{esc(e['number'])} від {esc(e['date'])}\n"
+        f"{esc(e['description'])}\n"
+        f"{e['url']}"
+    )
+
+
 def fmt_vykonkom(e):
     return (
         f"📋 <b>Засідання виконкому</b>\n"
@@ -84,6 +94,7 @@ def commission_key(e):
 CATEGORY_SOURCES = [
     ("sessions", sessions.latest_sessions, lambda e: e["url"], fmt_session),
     ("personnel", personnel.latest_personnel_changes, lambda e: e["url"], fmt_personnel),
+    ("trips", trips.latest_trips, lambda e: e["url"], fmt_trip),
     ("vykonkom", vykonkom_announce.latest_vykonkom_announcements, lambda e: e["url"], fmt_vykonkom),
     ("commissions", commissions.latest_commission_meetings, commission_key, fmt_commission),
 ]
