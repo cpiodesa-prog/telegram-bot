@@ -58,28 +58,12 @@
     "https://omr.gov.ua/ua/acts/mayor/219935/"
   ],
   "trips": [],
-  "mk_vykonkom": [
-    "https://mkrada.gov.ua/documents/52373.html",
-    "https://mkrada.gov.ua/documents/52372.html",
-    "https://mkrada.gov.ua/documents/52368.html",
-    "https://mkrada.gov.ua/documents/52367.html",
-    "https://mkrada.gov.ua/documents/52366.html",
-    "https://mkrada.gov.ua/documents/52361.html",
-    "https://mkrada.gov.ua/documents/52360.html",
-    "https://mkrada.gov.ua/documents/52359.html",
-    "https://mkrada.gov.ua/documents/52358.html",
-    "https://mkrada.gov.ua/documents/52357.html"
+  "mk_sessions": [],
+  "mk_vykonkom_announce": [
+    "12.08.2026|10:00"
   ],
-  "mk_mayor": [
-    "https://mkrada.gov.ua/documents/52362.html",
-    "https://mkrada.gov.ua/documents/52350.html",
-    "https://mkrada.gov.ua/documents/52349.html",
-    "https://mkrada.gov.ua/documents/52348.html",
-    "https://mkrada.gov.ua/documents/52365.html",
-    "https://mkrada.gov.ua/documents/52363.html",
-    "https://mkrada.gov.ua/documents/52347.html",
-    "https://mkrada.gov.ua/documents/52346.html",
-    "https://mkrada.gov.ua/documents/52345.html",
-    "https://mkrada.gov.ua/documents/52344.html"
+  "mk_commissions": [
+    "з питань економічної і інвестиційної політики, планування, бюджету, фінансів та соціально-економічного розвитку, підприємництва, наповнення бюджету та використання бюджетних коштів|06.08.2026|10:30",
+    "з питань екології, природокористування, просторового розвитку, містобудування, архітектури і будівництва, регулювання земельних відносин|05.08.2026|18:00"
   ]
 }
