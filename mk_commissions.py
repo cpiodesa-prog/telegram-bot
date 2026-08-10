@@ -24,7 +24,11 @@ DATE_RE = re.compile(r"(\d{2})\.(\d{2})\.(\d{4})")
 def latest_commission_meetings():
     resp = requests.get(SCHEDULE_URL, headers=HEADERS, timeout=30)
     resp.raise_for_status()
-    soup = BeautifulSoup(resp.text, "html.parser")
+    # ця сторінка не вказує charset у HTTP-заголовках, через що requests
+    # інколи хибно вгадує кодування (не UTF-8) і кирилиця перетворюється
+    # на "кляксу" — тому парсимо байти напряму, BeautifulSoup сам
+    # визначає кодування з <meta charset> у самому HTML.
+    soup = BeautifulSoup(resp.content, "html.parser")
     table = soup.find("table")
     if not table:
         return []

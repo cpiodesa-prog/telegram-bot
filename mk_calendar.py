@@ -43,7 +43,7 @@ def fetch_announcements(days_back=3, days_fwd=21, delay=0.3):
         )
         resp = requests.get(url, headers=HEADERS, timeout=30)
         resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "html.parser")
+        soup = BeautifulSoup(resp.content, "html.parser")
         items = soup.select("div.news_line_item")
         if not items:
             break

@@ -28,7 +28,10 @@ def fetch_vykonkom_agendas():
     знайдене посилання й лишається — set default, не перезаписуємо)."""
     resp = requests.get(AGENDA_LIST_URL, headers=HEADERS, timeout=30)
     resp.raise_for_status()
-    soup = BeautifulSoup(resp.text, "html.parser")
+    # ця сторінка не вказує charset у заголовках — парсимо байти напряму,
+    # щоб requests не вгадав кодування неправильно (та ж проблема,
+    # що й у mk_commissions.py).
+    soup = BeautifulSoup(resp.content, "html.parser")
     out = {}
     for a in soup.select("a[href*='/files/']"):
         title = a.get_text(" ", strip=True)
