@@ -34,8 +34,17 @@ def fmt_session(e):
 
 
 def fmt_personnel(e):
-    action = "Призначення" if re.search(r"призначенн", e["description"], re.I) else "Звільнення"
-    icon = "🆕" if action == "Призначення" else "🔚"
+    d = e["description"]
+    if re.search(r"призначенн", d, re.I):
+        action, icon = "Призначення", "🆕"
+    elif re.search(r"звільненн", d, re.I):
+        action, icon = "Звільнення", "🔚"
+    elif re.search(r"покладенн.*обов.?язк", d, re.I):
+        action, icon = "Покладення обов'язків (т.в.о.)", "⏳"
+    elif re.search(r"переведенн", d, re.I):
+        action, icon = "Переведення", "🔄"
+    else:
+        action, icon = "Кадрові зміни", "🧑‍💼"
     return (
         f"{icon} <b>Кадрове розпорядження: {action.lower()}</b>\n"
         f"№{esc(e['number'])} від {esc(e['date'])}\n"
