@@ -18,6 +18,8 @@ import personnel
 import trips
 import vykonkom_announce
 import commissions
+import mk_vykonkom
+import mk_mayor
 import telegram_notify
 
 
@@ -91,12 +93,32 @@ def commission_key(e):
     return f"{e.get('commission_url')}|{e['date']}|{e['time']}"
 
 
+def fmt_mk_vykonkom(e):
+    return (
+        f"🏛 <b>Миколаїв: рішення виконкому</b>\n"
+        f"№{esc(e['number'])} від {esc(e['date'])}\n"
+        f"{esc(e['description'])}\n"
+        f"{e['url']}"
+    )
+
+
+def fmt_mk_mayor(e):
+    return (
+        f"📜 <b>Миколаїв: розпорядження мера</b>\n"
+        f"№{esc(e['number'])} від {esc(e['date'])}\n"
+        f"{esc(e['description'])}\n"
+        f"{e['url']}"
+    )
+
+
 CATEGORY_SOURCES = [
     ("sessions", sessions.latest_sessions, lambda e: e["url"], fmt_session),
     ("personnel", personnel.latest_personnel_changes, lambda e: e["url"], fmt_personnel),
     ("trips", trips.latest_trips, lambda e: e["url"], fmt_trip),
     ("vykonkom", vykonkom_announce.latest_vykonkom_announcements, lambda e: e["url"], fmt_vykonkom),
     ("commissions", commissions.latest_commission_meetings, commission_key, fmt_commission),
+    ("mk_vykonkom", mk_vykonkom.latest_vykonkom, lambda e: e["url"], fmt_mk_vykonkom),
+    ("mk_mayor", mk_mayor.latest_mayor_orders, lambda e: e["url"], fmt_mk_mayor),
 ]
 
 
