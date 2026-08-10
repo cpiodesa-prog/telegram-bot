@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Щоденний оркестратор: перевіряє нові скликання сесій, кадрові розпорядження
 (призначення/звільнення), оголошення виконкому та засідання комісій Одеської
-міськради, і шле нові у Telegram.
+міськради, а також скликання сесій, анонси засідань виконкому та засідання
+комісій Миколаївської міськради — і шле нові у Telegram.
 
 Запуск:
   python run_daily.py            # реальна відправка (потрібні TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID)
@@ -18,8 +19,9 @@ import personnel
 import trips
 import vykonkom_announce
 import commissions
-import mk_vykonkom
-import mk_mayor
+import mk_sessions
+import mk_vykonkom_announce
+import mk_commissions
 import telegram_notify
 
 
@@ -93,22 +95,43 @@ def commission_key(e):
     return f"{e.get('commission_url')}|{e['date']}|{e['time']}"
 
 
-def fmt_mk_vykonkom(e):
+def fmt_mk_session(e):
     return (
-        f"🏛 <b>Миколаїв: рішення виконкому</b>\n"
+        f"🗓 <b>Миколаїв: скликання сесії</b>\n"
         f"№{esc(e['number'])} від {esc(e['date'])}\n"
         f"{esc(e['description'])}\n"
         f"{e['url']}"
     )
 
 
-def fmt_mk_mayor(e):
-    return (
-        f"📜 <b>Миколаїв: розпорядження мера</b>\n"
-        f"№{esc(e['number'])} від {esc(e['date'])}\n"
-        f"{esc(e['description'])}\n"
-        f"{e['url']}"
-    )
+def fmt_mk_vykonkom_announce(e):
+    lines = [
+        f"📋 <b>Миколаїв: засідання виконкому</b>",
+        f"{esc(e['date'])}" + (f", {esc(e['time'])}" if e.get("time") else ""),
+        f"Порядок денний: {e['agenda_url']}",
+    ]
+    if e.get("stream_url"):
+        lines.append(f"Трансляція: {e['stream_url']}")
+    return "\n".join(lines)
+
+
+def fmt_mk_commission(e):
+    lines = [
+        f"🧩 <b>Миколаїв: засідання комісії</b>",
+        f"{esc(e['commission'])}",
+        f"{esc(e['date'])}" + (f", {esc(e['time'])}" if e.get("time") else ""),
+    ]
+    if e.get("agenda_url"):
+        lines.append(f"Порядок денний: {e['agenda_url']}")
+    return "\n".join(lines)
+
+
+def mk_vykonkom_key(e):
+    return f"{e['date']}|{e['time']}"
+
+
+def mk_commission_key(e):
+    return f"{e['commission']}|{e['date']}|{e['time']}"
 
 
 CATEGORY_SOURCES = [
@@ -117,8 +140,9 @@ CATEGORY_SOURCES = [
     ("trips", trips.latest_trips, lambda e: e["url"], fmt_trip),
     ("vykonkom", vykonkom_announce.latest_vykonkom_announcements, lambda e: e["url"], fmt_vykonkom),
     ("commissions", commissions.latest_commission_meetings, commission_key, fmt_commission),
-    ("mk_vykonkom", mk_vykonkom.latest_vykonkom, lambda e: e["url"], fmt_mk_vykonkom),
-    ("mk_mayor", mk_mayor.latest_mayor_orders, lambda e: e["url"], fmt_mk_mayor),
+    ("mk_sessions", mk_sessions.latest_sessions, lambda e: e["url"], fmt_mk_session),
+    ("mk_vykonkom_announce", mk_vykonkom_announce.latest_vykonkom_announcements, mk_vykonkom_key, fmt_mk_vykonkom_announce),
+    ("mk_commissions", mk_commissions.latest_commission_meetings, mk_commission_key, fmt_mk_commission),
 ]
 
 

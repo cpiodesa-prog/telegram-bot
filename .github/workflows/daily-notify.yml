@@ -9,7 +9,12 @@ on:
     # важлива точність, зсунути на годину назад (07:00 -> "0 7 * * *" тощо).
     - cron: "0 7 * * *"    # ~10:00 Київ (літній час)
     - cron: "30 13 * * *"  # ~16:30 Київ (літній час)
-  workflow_dispatch: {}   # можливість запустити вручну з вкладки Actions
+  workflow_dispatch:      # можливість запустити вручну з вкладки Actions
+    inputs:
+      dry_run:
+        description: "Тестовий прогін (--dry-run): нічого не шле в Telegram, тільки друкує знайдене в лог"
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # потрібно, щоб закомітити оновлений state/seen.json
@@ -31,9 +36,10 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python run_daily.py
+        run: python run_daily.py ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
 
       - name: Commit updated state
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
           git config user.name "oms-notifier-bot"
           git config user.email "actions@users.noreply.github.com"
