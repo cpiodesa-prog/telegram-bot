@@ -44,6 +44,10 @@ jobs:
           git config user.name "oms-notifier-bot"
           git config user.email "actions@users.noreply.github.com"
           git add state/seen.json
+          # publish_delays.csv з'являється лише після першого залогованого
+          # випадку затримки публікації — на "-e" шелу git add на
+          # неіснуючий файл впав би, тому додаємо його, лише якщо він є
+          [ -f state/publish_delays.csv ] && git add state/publish_delays.csv || true
           git diff --cached --quiet || git commit -m "state: оновлено список надісланих подій"
           # якщо хтось запушив у main, поки цей job працював — підтягнути й спробувати ще раз,
           # щоб не падати з "rejected" і не втрачати щойно надісланий стан

@@ -9,3 +9,4 @@
 # state/seen.json генерується скриптом і комітиться і людиною, і ботом —
 # для нього критично важливо не мати сюрпризів з кодуванням переносів.
 state/seen.json text eol=lf
+state/publish_delays.csv text eol=lf

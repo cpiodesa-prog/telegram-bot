@@ -23,6 +23,7 @@ import mk_sessions
 import mk_vykonkom_announce
 import mk_commissions
 import telegram_notify
+import publish_delay
 
 
 def esc(s):
@@ -146,6 +147,18 @@ CATEGORY_SOURCES = [
 ]
 
 
+# Категорії, де є і номер+дата документа, і його власна сторінка — тільки
+# для них має сенс логувати затримку публікації (mkr публікує ще й порядок
+# денний / записи виконкому, комісій тощо, там окремої "дати документа"
+# нема). Помилки всередині логерів вже проковтуються в publish_delay.py.
+DELAY_LOGGERS = {
+    "sessions": lambda e: publish_delay.log_odesa("sessions", e["number"], e["date"], e["url"]),
+    "personnel": lambda e: publish_delay.log_odesa("personnel", e["number"], e["date"], e["url"]),
+    "trips": lambda e: publish_delay.log_odesa("trips", e["number"], e["date"], e["url"]),
+    "mk_sessions": lambda e: publish_delay.log_mykolaiv("mk_sessions", e["number"], e["date"], e["url"]),
+}
+
+
 def process_category(st, name, fetch_fn, key_fn, fmt_fn, dry_run):
     """Фетчить категорію, шле нові повідомлення і одразу зберігає state —
     незалежно від категорії, збій в одній не чіпає прогрес інших."""
@@ -166,6 +179,14 @@ def process_category(st, name, fetch_fn, key_fn, fmt_fn, dry_run):
             print("----")
             print(fmt_fn(e))
         return len(new), 0
+
+    logger = DELAY_LOGGERS.get(name)
+    if logger:
+        for e in new:
+            try:
+                logger(e)
+            except Exception:
+                pass  # аналітика затримки публікації не повинна ламати основний прогін
 
     sent = 0
     try:
