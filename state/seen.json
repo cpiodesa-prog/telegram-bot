@@ -55,10 +55,13 @@
     "https://omr.gov.ua/ua/acts/mayor/219991/",
     "https://omr.gov.ua/ua/acts/mayor/219992/",
     "https://omr.gov.ua/ua/acts/mayor/219934/",
-    "https://omr.gov.ua/ua/acts/mayor/219935/"
+    "https://omr.gov.ua/ua/acts/mayor/219935/",
+    "https://omr.gov.ua/ua/acts/mayor/222724/"
   ],
   "trips": [],
-  "mk_sessions": [],
+  "mk_sessions": [
+    "https://mkrada.gov.ua/documents/52376.html"
+  ],
   "mk_vykonkom_announce": [
     "12.08.2026|10:00"
   ],
