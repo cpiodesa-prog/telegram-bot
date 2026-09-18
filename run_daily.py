@@ -17,6 +17,7 @@ import state
 import sessions
 import personnel
 import trips
+import omva
 import vykonkom_announce
 import commissions
 import mk_sessions
@@ -62,6 +63,15 @@ def fmt_personnel(e):
 def fmt_trip(e):
     return (
         f"✈️ <b>Службове відрядження мера</b>\n"
+        f"№{esc(e['number'])} від {esc(e['date'])}\n"
+        f"{esc(e['description'])}\n"
+        f"{e['url']}"
+    )
+
+
+def fmt_omva(e):
+    return (
+        f"🪖 <b>Розпорядження керівника ОМВА</b>\n"
         f"№{esc(e['number'])} від {esc(e['date'])}\n"
         f"{esc(e['description'])}\n"
         f"{e['url']}"
@@ -139,6 +149,7 @@ CATEGORY_SOURCES = [
     ("sessions", sessions.latest_sessions, lambda e: e["url"], fmt_session),
     ("personnel", personnel.latest_personnel_changes, lambda e: e["url"], fmt_personnel),
     ("trips", trips.latest_trips, lambda e: e["url"], fmt_trip),
+    ("omva", omva.latest_omva_orders, lambda e: e["url"], fmt_omva),
     ("vykonkom", vykonkom_announce.latest_vykonkom_announcements, lambda e: e["url"], fmt_vykonkom),
     ("commissions", commissions.latest_commission_meetings, commission_key, fmt_commission),
     ("mk_sessions", mk_sessions.latest_sessions, lambda e: e["url"], fmt_mk_session),
@@ -155,6 +166,7 @@ DELAY_LOGGERS = {
     "sessions": lambda e: publish_delay.log_odesa("sessions", e["number"], e["date"], e["url"]),
     "personnel": lambda e: publish_delay.log_odesa("personnel", e["number"], e["date"], e["url"]),
     "trips": lambda e: publish_delay.log_odesa("trips", e["number"], e["date"], e["url"]),
+    "omva": lambda e: publish_delay.log_odesa("omva", e["number"], e["date"], e["url"]),
     "mk_sessions": lambda e: publish_delay.log_mykolaiv("mk_sessions", e["number"], e["date"], e["url"]),
 }
 

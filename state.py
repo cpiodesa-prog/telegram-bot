@@ -11,7 +11,7 @@ STATE_DIR = "state"
 STATE_FILE = os.path.join(STATE_DIR, "seen.json")
 
 CATEGORIES = [
-    "sessions", "vykonkom", "commissions", "personnel", "trips",
+    "sessions", "vykonkom", "commissions", "personnel", "trips", "omva",
     "mk_sessions", "mk_vykonkom_announce", "mk_commissions",
 ]
 
