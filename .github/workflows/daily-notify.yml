@@ -15,6 +15,10 @@ on:
         description: "Тестовий прогін (--dry-run): нічого не шле в Telegram, тільки друкує знайдене в лог"
         type: boolean
         default: false
+      seed_omva_keep:
+        description: "ОДНОРАЗОВО: скільки останніх розпоряджень ОМВА лишити 'новими' (0 = звичайний прогін, не сидинг)"
+        type: number
+        default: 0
 
 permissions:
   contents: write   # потрібно, щоб закомітити оновлений state/seen.json
@@ -32,7 +36,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Seed omva state (одноразово, тільки якщо seed_omva_keep > 0)
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.seed_omva_keep != '0' && github.event.inputs.seed_omva_keep != '' }}
+        run: python seed_omva.py ${{ github.event.inputs.seed_omva_keep }}
+
       - name: Run daily check
+        # на schedule-запусках inputs узагалі нема (event.inputs — null/undefined),
+        # тож нормальний прогін завжди йде, КРІМ ручного запуску з seed_omva_keep > 0
+        if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.seed_omva_keep != '0' && github.event.inputs.seed_omva_keep != '') }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
