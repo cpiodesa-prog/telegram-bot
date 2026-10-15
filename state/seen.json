@@ -22,7 +22,8 @@
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-osviti-sportu-ta-vzaemodii-z/|2026.10.08|12:00",
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-transportu-i-dorojnogo/|2026.10.09|15:00",
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-planuvannya-zabudovi-teritoriy/|2026.10.16|13:00",
-    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-ohoroni-zdorov-ya/|2026.10.16|12:00"
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-ohoroni-zdorov-ya/|2026.10.16|12:00",
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-odeskoi-miskoi-radi-z-pitan-nadzvichaynih/|2026.10.20|12:00"
   ],
   "personnel": [
     "https://omr.gov.ua/ua/acts/mayor/222486/",
@@ -97,7 +98,8 @@
     "https://omr.gov.ua/ua/acts/mayor/223508/",
     "https://omr.gov.ua/ua/acts/mayor/223595/",
     "https://omr.gov.ua/ua/acts/mayor/223594/",
-    "https://omr.gov.ua/ua/acts/mayor/223653/"
+    "https://omr.gov.ua/ua/acts/mayor/223653/",
+    "https://omr.gov.ua/ua/acts/mayor/223762/"
   ],
   "trips": [],
   "omva": [
@@ -213,6 +215,7 @@
     "з питань охорони здоров’я, соціального захисту населення, освіти, культури, туризму, молоді та спорту|22.09.2026|10:00",
     "з питань прав людини, дітей, сім'ї, законності, гласності, антикорупційної політики, місцевого самоврядування, депутатської діяльності та етики|23.09.2026|16:00",
     "з питань економічної і інвестиційної політики, планування, бюджету, фінансів та соціально-економічного розвитку, підприємництва, наповнення бюджету та використання бюджетних коштів|16.09.2026|15:0010:00",
-    "з питань житлово-комунального господарства, комунальної власності, благоустрою міста, промисловості, транспорту, енергозбереження, зв'язку, інформаційних технологій та діджиталізації|21.09.2026|18:0010:30"
+    "з питань житлово-комунального господарства, комунальної власності, благоустрою міста, промисловості, транспорту, енергозбереження, зв'язку, інформаційних технологій та діджиталізації|21.09.2026|18:0010:30",
+    "з питань екології, природокористування, просторового розвитку, містобудування, архітектури і будівництва, регулювання земельних відносин|15.10.2026|13:00"
   ]
 }
