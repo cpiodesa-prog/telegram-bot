@@ -25,7 +25,8 @@
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-ohoroni-zdorov-ya/|2026.10.16|12:00",
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-odeskoi-miskoi-radi-z-pitan-nadzvichaynih/|2026.10.20|12:00",
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-jitlovo-komunalnogo-gospodarstva/|2026.10.23|14:00",
-    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-planuvannya-byudjetu-i-finansiv/|2026.10.21|12:00"
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-planuvannya-byudjetu-i-finansiv/|2026.10.21|12:00",
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-transportu-i-dorojnogo/|2026.10.26|15:00"
   ],
   "personnel": [
     "https://omr.gov.ua/ua/acts/mayor/222486/",
@@ -182,7 +183,14 @@
     "https://omr.gov.ua/ua/acts/omva/223704/",
     "https://omr.gov.ua/ua/acts/omva/223710/",
     "https://omr.gov.ua/ua/acts/omva/223706/",
-    "https://omr.gov.ua/ua/acts/omva/223699/"
+    "https://omr.gov.ua/ua/acts/omva/223699/",
+    "https://omr.gov.ua/ua/acts/omva/223840/",
+    "https://omr.gov.ua/ua/acts/omva/223838/",
+    "https://omr.gov.ua/ua/acts/omva/223837/",
+    "https://omr.gov.ua/ua/acts/omva/223841/",
+    "https://omr.gov.ua/ua/acts/omva/223835/",
+    "https://omr.gov.ua/ua/acts/omva/223836/",
+    "https://omr.gov.ua/ua/acts/omva/223834/"
   ],
   "mk_sessions": [
     "https://mkrada.gov.ua/documents/52376.html",
@@ -220,6 +228,8 @@
     "з питань житлово-комунального господарства, комунальної власності, благоустрою міста, промисловості, транспорту, енергозбереження, зв'язку, інформаційних технологій та діджиталізації|21.09.2026|18:0010:30",
     "з питань екології, природокористування, просторового розвитку, містобудування, архітектури і будівництва, регулювання земельних відносин|15.10.2026|13:00",
     "з питань екології, природокористування, просторового розвитку, містобудування, архітектури і будівництва, регулювання земельних відносин|15.10.2026|13:0011:00",
-    "з питань прав людини, дітей, сім'ї, законності, гласності, антикорупційної політики, місцевого самоврядування, депутатської діяльності та етики|19.10.2026|16:00"
+    "з питань прав людини, дітей, сім'ї, законності, гласності, антикорупційної політики, місцевого самоврядування, депутатської діяльності та етики|19.10.2026|16:00",
+    "з питань екології, природокористування, просторового розвитку, містобудування, архітектури і будівництва, регулювання земельних відносин|15.10.2026|13:0011:0012:00",
+    "з питань охорони здоров’я, соціального захисту населення, освіти, культури, туризму, молоді та спорту|20.10.2026|10:00"
   ]
 }
