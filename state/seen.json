@@ -9,7 +9,8 @@
     "https://omr.gov.ua/ua/announce/248948/",
     "https://omr.gov.ua/ua/announce/248970/",
     "https://omr.gov.ua/ua/announce/249081/",
-    "https://omr.gov.ua/ua/announce/249143/"
+    "https://omr.gov.ua/ua/announce/249143/",
+    "https://omr.gov.ua/ua/announce/249287/"
   ],
   "commissions": [
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-osviti-sportu-ta-vzaemodii-z/|2026.08.05|14:00",
@@ -30,7 +31,10 @@
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-odeskoi-miskoi-radi-z-pitan-nadzvichaynih/|2026.10.20|12:00",
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-jitlovo-komunalnogo-gospodarstva/|2026.10.23|14:00",
     "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-planuvannya-byudjetu-i-finansiv/|2026.10.21|12:00",
-    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-transportu-i-dorojnogo/|2026.10.26|15:00"
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-transportu-i-dorojnogo/|2026.10.26|15:00",
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-transportu-i-dorojnogo/|2026.11.25|15:00",
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-osviti-sportu-ta-vzaemodii-z/|2026.11.17|11:00",
+    "https://deputat.omr.gov.ua/commissions/postiyna-komisiya-z-pitan-ohoroni-zdorov-ya/|2026.11.11|14:00"
   ],
   "personnel": [
     "https://omr.gov.ua/ua/acts/mayor/222486/",
@@ -113,7 +117,11 @@
     "https://omr.gov.ua/ua/acts/mayor/224053/",
     "https://omr.gov.ua/ua/acts/mayor/224205/",
     "https://omr.gov.ua/ua/acts/mayor/224213/",
-    "https://omr.gov.ua/ua/acts/mayor/224217/"
+    "https://omr.gov.ua/ua/acts/mayor/224217/",
+    "https://omr.gov.ua/ua/acts/mayor/224324/",
+    "https://omr.gov.ua/ua/acts/mayor/224290/",
+    "https://omr.gov.ua/ua/acts/mayor/224291/",
+    "https://omr.gov.ua/ua/acts/mayor/224281/"
   ],
   "trips": [],
   "omva": [
@@ -224,14 +232,23 @@
     "https://omr.gov.ua/ua/acts/omva/224147/",
     "https://omr.gov.ua/ua/acts/omva/224203/",
     "https://omr.gov.ua/ua/acts/omva/224237/",
-    "https://omr.gov.ua/ua/acts/omva/224234/"
+    "https://omr.gov.ua/ua/acts/omva/224234/",
+    "https://omr.gov.ua/ua/acts/omva/224351/",
+    "https://omr.gov.ua/ua/acts/omva/224355/",
+    "https://omr.gov.ua/ua/acts/omva/224356/",
+    "https://omr.gov.ua/ua/acts/omva/224348/",
+    "https://omr.gov.ua/ua/acts/omva/224350/",
+    "https://omr.gov.ua/ua/acts/omva/224353/",
+    "https://omr.gov.ua/ua/acts/omva/224349/",
+    "https://omr.gov.ua/ua/acts/omva/224288/"
   ],
   "mk_sessions": [
     "https://mkrada.gov.ua/documents/52376.html",
     "https://mkrada.gov.ua/documents/52742.html",
     "https://mkrada.gov.ua/documents/52873.html",
     "https://mkrada.gov.ua/documents/52896.html",
-    "https://mkrada.gov.ua/documents/53336.html"
+    "https://mkrada.gov.ua/documents/53336.html",
+    "https://mkrada.gov.ua/documents/53431.html"
   ],
   "mk_vykonkom_announce": [
     "12.08.2026|10:00",
@@ -240,7 +257,8 @@
     "09.09.2026|10:00",
     "23.09.2026|10:00",
     "14.10.2026|10:00",
-    "28.10.2026|10:00"
+    "28.10.2026|10:00",
+    "25.11.2026|10:00"
   ],
   "mk_commissions": [
     "з питань економічної і інвестиційної політики, планування, бюджету, фінансів та соціально-економічного розвитку, підприємництва, наповнення бюджету та використання бюджетних коштів|06.08.2026|10:30",
@@ -269,6 +287,8 @@
     "з питань охорони здоров’я, соціального захисту населення, освіти, культури, туризму, молоді та спорту|20.10.2026|10:00",
     "з питань житлово-комунального господарства, комунальної власності, благоустрою міста, промисловості, транспорту, енергозбереження, зв'язку, інформаційних технологій та діджиталізації|27.10.2026|19:00",
     "з питань економічної і інвестиційної політики, планування, бюджету, фінансів та соціально-економічного розвитку, підприємництва, наповнення бюджету та використання бюджетних коштів|27.10.2026|16:00",
-    "з питань охорони здоров’я, соціального захисту населення, освіти, культури, туризму, молоді та спорту|20.10.2026|10:0010:00"
+    "з питань охорони здоров’я, соціального захисту населення, освіти, культури, туризму, молоді та спорту|20.10.2026|10:0010:00",
+    "з питань прав людини, дітей, сім'ї, законності, гласності, антикорупційної політики, місцевого самоврядування, депутатської діяльності та етики|18.11.2026|13:00",
+    "з питань охорони здоров’я, соціального захисту населення, освіти, культури, туризму, молоді та спорту|17.11.2026|09:00"
   ]
 }
